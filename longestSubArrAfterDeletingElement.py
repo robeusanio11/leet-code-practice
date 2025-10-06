@@ -34,27 +34,25 @@ Constraints:
 nums[i] is either 0 or 1.
 '''
 
+# This functions iterates through the array while maintaining a range on indexes that exist between 0's to find the longest subarray of 1's
 def longestSubarray(nums) -> int:
-    longestSubArr = 0   # longest subarr starts at 0
-    # iterate through removing 1 element at a time
-    for index, num in enumerate(nums):
-        curList = nums.copy()   # copy original arr to new arr
-        curList.pop(index)   # remove current element in loop
-        curLongest = 0    # set the current longest subarray to 0
-        # iterate through new arr checking for longest subarr
-        for curNum in curList:
-            # add to cur subarr length for each 1 in a row
-            if curNum == 1:
-                curLongest += 1
-            # set the new longest subarr if applicable
-            if curLongest > longestSubArr:
-                longestSubArr = curLongest
-            # reset longest subarr of 1's if 0 is found
-            if curNum == 0:
-                curLongest = 0
-
-    return longestSubArr   # returns the longest subarr
-
+    numZeroes = 0   # tracks # of 0's
+    longestSubArrLen = 0   # tracks the longest subarray of 1's between 0's
+    start = 0   # tracks start position
+    # iterates through array creating/tracking a range of indexes where the end values are 0
+    for i, num in enumerate(nums):
+        # prepare to move index range when 0 is found
+        if num == 0: 
+            numZeroes += 1
+        # move index range so each end contains a 0
+        while numZeroes > 1:
+            if nums[start] == 0: numZeroes -= 1
+            start += 1
+        # update longest subarray length if new range is longer
+        if i-start > longestSubArrLen:
+            longestSubArrLen = i-start
+    # returns length of the longest subarray of 1's
+    return longestSubArrLen   
 
 print(longestSubarray([1,1,0,1]))
 print(longestSubarray([0,1,1,1,0,1,1,0,1]))
