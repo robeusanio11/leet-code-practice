@@ -54,6 +54,7 @@ def longestSubarray(nums) -> int:
     # returns length of the longest subarray of 1's
     return longestSubArrLen   
 
+# test cases
 print(longestSubarray([1,1,0,1]))
 print(longestSubarray([0,1,1,1,0,1,1,0,1]))
 print(longestSubarray([1,1,1]))
