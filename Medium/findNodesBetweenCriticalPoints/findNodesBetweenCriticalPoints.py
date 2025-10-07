@@ -53,10 +53,33 @@ The number of nodes in the list is in the range [2, 105].
 1 <= Node.val <= 105
 '''
 # Definition for singly-linked list.
-# class ListNode:
-#     def __init__(self, val=0, next=None):
-#         self.val = val
-#         self.next = next
+class ListNode:
+    def __init__(self, val=0, next=None):
+        self.val = val
+        self.next = next
 
-def nodesBetweenCriticalPoints(self, head):
-    return
+
+def nodesBetweenCriticalPoints(head):
+    prev = head
+    cur = prev.next
+    critical_points = []
+    i = 0
+    while cur != None:
+        if cur.next != None:
+            if (cur.val < prev.val and cur.val < cur.next.val) or (cur.val > prev.val and cur.val > cur.next.val):
+                critical_points.append(i)
+        prev = cur
+        cur = cur.next
+        i += 1
+    if len(critical_points) < 2:
+        return [-1,-1]
+    minDistance = critical_points[1] - critical_points[0]
+    for index, point in enumerate(critical_points):
+        if index + 1 < len(critical_points):
+            if (critical_points[index + 1] - critical_points[index]) < minDistance:
+                minDistance = critical_points[index + 1] - critical_points[index]
+    maxDistance = max(critical_points) - min(critical_points)
+    return [minDistance, maxDistance]
+
+linked_list = ListNode(5, ListNode(3, ListNode(1, ListNode(2, ListNode(5, ListNode(1, ListNode(2, None)))))))
+print(nodesBetweenCriticalPoints(linked_list))
