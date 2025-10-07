@@ -58,28 +58,44 @@ class ListNode:
         self.val = val
         self.next = next
 
-
+# Solution
 def nodesBetweenCriticalPoints(head):
+    # variables to track prev/cur nodes, indexes of all critical points, and the current index
     prev = head
     cur = prev.next
     critical_points = []
     i = 0
+    # iterates through LL finding all critical points
     while cur != None:
         if cur.next != None:
+            # checks for critical points
             if (cur.val < prev.val and cur.val < cur.next.val) or (cur.val > prev.val and cur.val > cur.next.val):
-                critical_points.append(i)
+                critical_points.append(i) # adds critical point to list
+        # update prev/cur nodes and cur index
         prev = cur
         cur = cur.next
         i += 1
+    # return [-1, -1] or edge case (< 2 critical vals)
     if len(critical_points) < 2:
         return [-1,-1]
-    minDistance = critical_points[1] - critical_points[0]
+    # compare differences of indexes that are adjacent in critical_points and find min 
+    minDistance = critical_points[1] - critical_points[0] # start minDistance with first adjacent pair
+    # iterate through critical points finding lowest difference of adjacent points
     for index, point in enumerate(critical_points):
+        # checks index is in range
         if index + 1 < len(critical_points):
+            # updates minDistance if applicable
             if (critical_points[index + 1] - critical_points[index]) < minDistance:
                 minDistance = critical_points[index + 1] - critical_points[index]
-    maxDistance = max(critical_points) - min(critical_points)
+    # compares first and last indexes of critical points to find max distance
+    maxDistance = critical_points[len(critical_points) - 1] - critical_points[0]
+    # returns min/max distance between critical points in an array
     return [minDistance, maxDistance]
 
-linked_list = ListNode(5, ListNode(3, ListNode(1, ListNode(2, ListNode(5, ListNode(1, ListNode(2, None)))))))
-print(nodesBetweenCriticalPoints(linked_list))
+# Test Cases
+linked_list1 = ListNode(3, ListNode(1, None))
+linked_list2 = ListNode(5, ListNode(3, ListNode(1, ListNode(2, ListNode(5, ListNode(1, ListNode(2, None)))))))
+linked_list3 = ListNode(1, ListNode(3, ListNode(2, ListNode(2, ListNode(3, ListNode(2, ListNode(2, ListNode(2, ListNode(7, None)))))))))
+print(nodesBetweenCriticalPoints(linked_list1)) # expected ([-1, -1])
+print(nodesBetweenCriticalPoints(linked_list2)) # expected ([1, 3])
+print(nodesBetweenCriticalPoints(linked_list3)) # expected ([3, 3])
