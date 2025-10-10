@@ -44,11 +44,11 @@ Conceptual Idea: loop through range (left, right) adding up values at each index
 
 class NumArray:
 
-    def __init__(self, nums: List[int]):
+    def __init__(self, nums):
         self.nums = nums
         
 
-    def sumRange(self, left: int, right: int) -> int:
+    def sumRange(self, left, right):
         sum = 0
         for index in range(left, right + 1):
             sum += self.nums[index]
