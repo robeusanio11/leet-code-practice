@@ -41,3 +41,20 @@ At most 104 calls will be made to sumRange.
 Problem #303: Range Sum Query - Immutable
 Conceptual Idea: loop through range (left, right) adding up values at each index
 '''
+
+class NumArray:
+
+    def __init__(self, nums: List[int]):
+        self.nums = nums
+        
+
+    def sumRange(self, left: int, right: int) -> int:
+        sum = 0
+        for index in range(left, right + 1):
+            sum += self.nums[index]
+        return sum
+
+
+# Your NumArray object will be instantiated and called as such:
+# obj = NumArray(nums)
+# param_1 = obj.sumRange(left,right)
