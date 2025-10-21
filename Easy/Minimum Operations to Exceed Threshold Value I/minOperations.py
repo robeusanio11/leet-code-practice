@@ -41,6 +41,8 @@ Constraints:
 1 <= nums[i] <= 109
 1 <= k <= 109
 The input is generated such that there is at least one index i such that nums[i] >= k.'''
+
+#Conceptual idea: iterate through array and increment # of operations for every value less than k
 def minOperations(nums, k):
     operations = 0
     for num in nums:
